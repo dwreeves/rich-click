@@ -6,6 +6,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+        strategy:
+          matrix:
+            python: [3.7.x, 3.8.x, 3.9.x, 3.10.x, 3.11.x]
+            click: [7.0.*, 7.1.*, 8.0.*, 8.1.*]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -13,10 +17,14 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.7.13"
+          python-version: ${{ matrix.python }}
 
       - name: Install Dependencies
-        run: pip install '.[dev]'
+        run: |
+          pip install '.[dev]'
+          pip install --upgrade "click==$CLICK_VERSION"
+        env:
+          CLICK_VERSION: ${{ matrix.click }}
 
       - name: Run Tests
         run: pytest --cov --cov-report xml

@@ -1,5 +1,6 @@
 import inspect
 import re
+from distutils.version import LooseVersion
 from os import getenv
 from typing import Dict, Iterable, List, Optional, Union
 
@@ -298,8 +299,27 @@ def _get_parameter_help(
     if getattr(param, "show_envvar", None) and not config.option_envvar_first and envvar is not None:
         items.append(Text(config.envvar_string.format(envvar), style=config.style_option_envvar))
 
-    # Default value
-    if getattr(param, "show_default", None):
+    # Emulate behavior across various Click versions.
+    if LooseVersion(click.__version__) < LooseVersion("8.0.0"):
+        parse_default = param.default is not None and (
+            getattr(param, "show_default", None) or getattr(ctx, "show_default", None)
+        )
+    elif LooseVersion("8.0.0") <= LooseVersion(click.__version__) < LooseVersion("8.1.0"):
+        show_default_is_str = isinstance(param.show_default, str)
+        parse_default = show_default_is_str or (param.default is not None and (param.show_default or ctx.show_default))
+    else:
+        show_default = False
+        show_default_is_str = False
+        if param.show_default is not None:
+            if isinstance(getattr(param, "show_default"), str):
+                show_default_is_str = show_default = True
+            else:
+                show_default = getattr(param, "show_default")
+        elif param.show_default is not None:
+            show_default = getattr(ctx, "show_default", False)
+        parse_default = bool(show_default_is_str or (show_default and (param.default is not None)))
+
+    if parse_default:
         # param.default is the value, but click is a bit clever in choosing what to show here
         # eg. --debug/--no-debug, default=False will show up as [default: no-debug] instead of [default: False]
         # To avoid duplicating loads of code, let's just pull out the string from click with a regex

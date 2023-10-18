@@ -1,0 +1,53 @@
+site_name: My Docs
+theme:
+  name: material
+  overrides: overrides
+  favicon: images/favicon.png
+  icon:
+    repo: fontawesome/brands/github-alt
+  font:
+    text: Raleway
+    code: Jetbrains Mono
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: amber
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: white
+      accent: amber
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - Live Style Editor: live-style-editor.md
+  - API Reference: api-reference.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            show_root_heading: true
+            show_source: true
+
+markdown_extensions:
+#  - markdown_include.include:
+#      base_path: .
+#  - markdown.extensions.codehilite:
+#      guess_lang: false
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/ewels/rich-click
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/ewels

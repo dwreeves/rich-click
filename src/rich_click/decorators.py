@@ -5,7 +5,7 @@ The intention is to provide attractive help output from click, formatted with ri
 customisation required.
 """
 
-from typing import Any, Callable, cast, Dict, Optional, overload, Type, TYPE_CHECKING, TypeVar, Union
+from typing import Any, Callable, cast, Dict, Mapping, Optional, overload, Type, TYPE_CHECKING, TypeVar, Union
 
 from click import Command
 from click import command as click_command
@@ -13,7 +13,7 @@ from click import Group
 from click import group as click_group
 from click import pass_context as click_pass_context
 from rich.console import Console
-from typing_extensions import Concatenate, ParamSpec
+from typing_extensions import Concatenate, Literal, ParamSpec
 
 from . import rich_click  # noqa: F401
 
@@ -150,7 +150,9 @@ class NotSupportedError(Exception):
 
 
 def rich_config(
-    console: Optional[Console] = None, help_config: Optional[RichHelpConfiguration] = None
+    console: Optional[Console] = None,
+    help_config: Optional[Union[RichHelpConfiguration, Mapping[str, Any]]] = None,
+    # merge_or_overwrite_help_config: Literal["merge", "overwrite"] = "merge"
 ) -> Callable[[FC], FC]:
     """Use decorator to configure Rich Click settings.
 
@@ -159,6 +161,7 @@ def rich_config(
             Defaults to None.
         help_config: Rich help configuration that is used internally to format help messages and exceptions
             Defaults to None.
+        merge_or_overwrite_help_config: If "merge", configuration changes are merged. Else, overwrite.
     """
     if CLICK_IS_BEFORE_VERSION_8X:
 
@@ -175,21 +178,25 @@ def rich_config(
         return decorator_with_warning
 
     def decorator(obj: FC) -> FC:
-        extra: Dict[str, Any] = {}
-        if console is not None:
-            extra["rich_console"] = console
-        if help_config is not None:
-            extra["rich_help_config"] = help_config
+        _help_config: Optional[RichHelpConfiguration]
+        if isinstance(help_config, Mapping):
+            _help_config = RichHelpConfiguration(**help_config)
+        else:
+            _help_config = help_config
 
         if isinstance(obj, (RichCommand, RichGroup)):
-            obj.context_settings.update(extra)
+            context_settings_dict = obj.context_settings
         elif callable(obj) and not isinstance(obj, (Command, Group)):
-            if hasattr(obj, "__rich_context_settings__"):
-                obj.__rich_context_settings__.update(extra)
-            else:
-                setattr(obj, "__rich_context_settings__", extra)
+            if not hasattr(obj, "__rich_context_settings__"):
+                setattr(obj, "__rich_context_settings__", {})
+            context_settings_dict = obj.__rich_context_settings__  # type: ignore[union-attr]
         else:
             raise NotSupportedError("`rich_config` requires a `RichCommand` or `RichGroup`. Try using the cls keyword")
+
+        if console is not None:
+            context_settings_dict["rich_console"] = console
+        if _help_config is not None:
+            context_settings_dict["rich_help_config"] = _help_config
         return obj
 
     return decorator

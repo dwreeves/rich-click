@@ -1,3 +1,4 @@
+from types import TracebackType
 from typing import Any, Optional, Type
 
 import click
@@ -35,10 +36,16 @@ class RichContext(click.Context):
 
         self.console = rich_console
 
-        if rich_help_config is None and hasattr(parent, "help_config"):
+        parent_help_config = getattr(parent, "help_config", None)
+
+        if rich_help_config is None and parent_help_config:
             rich_help_config = parent.help_config  # type: ignore[has-type,union-attr]
 
         self.help_config = rich_help_config
+
+    # Assist mypy
+    def __enter__(self) -> "RichContext":
+        return super().__enter__()  # type: ignore[return-value]
 
     def make_formatter(self) -> RichHelpFormatter:
         """Create the Rich Help Formatter."""

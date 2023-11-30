@@ -1,20 +1,9 @@
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 import rich.text
-
-# Due to how rich_click.cli.patch() works, it is safer to import Command types directly
-# rather than use the click module e.g. click.Command
-from click import Group
 from typing_extensions import Literal
 
-from rich_click._compat_click import CLICK_IS_BEFORE_VERSION_9X
 from rich_click.rich_help_configuration import force_terminal_default, OptionHighlighter, terminal_width_default
-
-if CLICK_IS_BEFORE_VERSION_9X:
-    pass
-else:
-    MultiCommand = Group  # type: ignore[misc,assignment,unused-ignore]
-
 
 # Default styles
 STYLE_OPTION: rich.style.StyleType = "bold cyan"
@@ -103,12 +92,29 @@ USE_CLICK_SHORT_HELP: bool = False  # Use click's default function to truncate h
 highlighter: rich.highlighter.Highlighter = OptionHighlighter()
 
 
+def __dir__() -> List[str]:
+    # Users access all the attributes of this module directly when setting options.
+    # So we clean out the imported type checks from the __dir__ to help autocompletion.
+    return [
+        "__builtins__",
+        "__cached__",
+        "__doc__",
+        "__file__",
+        "__loader__",
+        "__name__",
+        "__package__",
+        "__spec__",
+        "highlighter",
+        *[i for i in globals() if i.upper() == i],
+    ]
+
+
 def __getattr__(name: str) -> Any:
     if name == "get_module_help_configuration":
         import warnings
 
         warnings.warn(
-            "get_module_help_configuration() is deprecated." " Use RichHelpConfiguration.build_from_globals() instead.",
+            "get_module_help_configuration() is deprecated. Use RichHelpConfiguration.build_from_globals() instead.",
             DeprecationWarning,
         )
         from rich_click.rich_help_configuration import RichHelpConfiguration
@@ -127,7 +133,7 @@ def __getattr__(name: str) -> Any:
         import warnings
 
         warnings.warn(
-            f"{name}() is no longer located in the `rich_click` module." " It is now in the `rich_markup` module.",
+            f"{name}() is no longer located in the `rich_click` module. It is now in the `rich_markup` module.",
             DeprecationWarning,
         )
         import rich_click.rich_help_rendering

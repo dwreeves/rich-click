@@ -1,5 +1,6 @@
+import os
 import sys
-from typing import IO, TYPE_CHECKING, Any, Optional
+from typing import IO, TYPE_CHECKING, Any, Dict, Optional
 
 import click
 from typing_extensions import Literal
@@ -45,8 +46,9 @@ def create_console(config: RichHelpConfiguration, file: Optional[IO[str]] = None
         ),
         color_system=config.color_system,
         force_terminal=config.force_terminal,
-        file=file,
+        file=file or open(os.devnull, "w"),
         width=config.width,
+        record=True if file is None else False,
         legacy_windows=config.legacy_windows,
     )
     if isinstance(config.max_width, int):
@@ -69,7 +71,7 @@ class RichHelpFormatter(click.HelpFormatter):
     not be created directly
     """
 
-    export_console_as: Literal[None, "html", "svg"] = None
+    export_console_as: Literal[None, "html", "svg", "text"] = None
 
     def __init__(
         self,
@@ -80,6 +82,8 @@ class RichHelpFormatter(click.HelpFormatter):
         console: Optional["Console"] = None,
         config: Optional[RichHelpConfiguration] = None,
         file: Optional[IO[str]] = None,
+        export_console_as: Literal[None, "html", "svg", "text"] = None,
+        export_kwargs: Optional[Dict[str, Any]] = None,
         **kwargs: Any,
     ) -> None:
         """
@@ -94,6 +98,8 @@ class RichHelpFormatter(click.HelpFormatter):
             console: Use an external console.
             config: RichHelpConfiguration. If None, then build config from globals.
             file: Stream to output to in the Rich Console. If None, use stdout.
+            export_console_as: How output is rendered by getvalue(). Default of None renders output normally.
+            export_kwargs: Any kwargs passed to the export method of the Console in getvalue().
             **kwargs: Kwargs passed to click.HelpFormatter.
         """
         if config is not None:
@@ -114,6 +120,9 @@ class RichHelpFormatter(click.HelpFormatter):
             width = self.config.width
         if max_width is None:
             max_width = self.config.max_width
+
+        self.export_console_as = export_console_as
+        self.export_kwargs = export_kwargs or {}
 
         super().__init__(indent_increment, width, max_width, *args, **kwargs)
 
@@ -137,12 +146,33 @@ class RichHelpFormatter(click.HelpFormatter):
 
         get_rich_usage(formatter=self, prog=prog, args=args, prefix=prefix)
 
+    def write_error(self, e: click.ClickException) -> None:
+        from rich_click.rich_help_rendering import rich_format_error
+
+        rich_format_error(self=e, formatter=self)
+
     def write_abort(self) -> None:
         """Print richly formatted abort error."""
         self.console.print(self.config.aborted_text, style=self.config.style_aborted)
 
     def getvalue(self) -> str:
         if self.console.record:
-            return self.console.export_text(clear=False, styles=True)
-
-        return super().getvalue()
+            kw = self.export_kwargs.copy()
+            kw.setdefault("clear", False)
+            if self.export_console_as is None:
+                kw.setdefault("styles", True)
+                res = self.console.export_text(**kw)
+            elif self.export_console_as == "text":
+                res = self.console.export_text(**kw)
+            elif self.export_console_as == "html":
+                res = self.console.export_html(**kw)
+            elif self.export_console_as == "svg":
+                kw.setdefault("title", " ".join(sys.argv))
+                res = self.console.export_svg(**kw)
+            else:
+                raise ValueError(
+                    "Invalid value for `export_console_as`." " Must be one of 'text', 'html', 'svg', or None."
+                )
+            return res
+        else:
+            return super().getvalue()

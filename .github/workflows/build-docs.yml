@@ -28,7 +28,7 @@ jobs:
           uv pip install --system --editable ".[docs]"
 
       - name: Generate terminal images with rich-codex
-        uses: ewels/rich-codex@v1
+        uses: dwreeves/rich-codex@4231c0de9f89e5f3c382973b00e7025e82caa719
         with:
           commit_changes: "true"
           clean_img_paths: docs/images/*.svg

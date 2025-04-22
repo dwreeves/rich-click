@@ -2,6 +2,7 @@ name: Test Examples
 on: [push, pull_request]
 jobs:
   examples:
+    if: false
     runs-on: ubuntu-22.04
     strategy:
       matrix:

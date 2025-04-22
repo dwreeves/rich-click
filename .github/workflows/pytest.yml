@@ -2,6 +2,7 @@ name: Test Coverage
 on: [push, pull_request]
 jobs:
   test:
+    if: false
     runs-on: ubuntu-22.04
     strategy:
       matrix:

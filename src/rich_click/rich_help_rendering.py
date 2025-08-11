@@ -246,7 +246,7 @@ def _get_parameter_default(
         parse_default = bool(show_default_is_str or (show_default and (param.default is not None)))
 
     if parse_default:
-        help_record = param.get_help_record(ctx)
+        help_record =  param.help # param.get_help_record(ctx)
         if TYPE_CHECKING:  # pragma: no cover
             assert isinstance(help_record, tuple)
         default_str_match = re.search(r"\[(?:.+; )?default: (.*)\]", help_record[-1])

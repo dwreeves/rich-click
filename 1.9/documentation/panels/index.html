@@ -1014,7 +1014,8 @@
 
 
 <h1 id="panels">Panels<a class="headerlink" href="#panels" title="Permanent link">&para;</a></h1>
-<p>The containers in help text which contain options and subcommands are called <code>RichPanel</code>s. RichPanels are object inside the code.</p>
+<p>The containers which contain options and subcommands are called panels:</p>
+<p><a class="glightbox" href="../images/panels.svg" data-type="image" data-width="100em" data-height="auto" data-desc-position="bottom"><img alt="" src="../images/panels.svg" /></a></p>
 <p>By default, <code>RichCommand</code>s have a single panel for options named "Options", and <code>RichGroup</code>s have an additional panel for commands named "Commands".</p>
 <p><strong>rich-click</strong> allows you to control and customize everything about these panels:</p>
 <ul>
@@ -1031,6 +1032,7 @@ We will support the old groups API indefinitely, although its use is discouraged
 </div>
 <h2 id="introduction-to-api">Introduction to API<a class="headerlink" href="#introduction-to-api" title="Permanent link">&para;</a></h2>
 <p>The high-level API for defining panels is with the <code>@click.command_panel()</code> and <code>@click.option_panel()</code> decorators.</p>
+<p>Under the hood, these decorators create <strong><code>RichPanel</code></strong> objects (<code>RichCommandPanel</code> and <code>RichOptionPanel</code>) that get attached to the command.</p>
 <h3 id="options">Options<a class="headerlink" href="#options" title="Permanent link">&para;</a></h3>
 <p>Options panels handle parameters for your command:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># /// script</span>
@@ -1300,19 +1302,25 @@ Renamed panels can still have their panel-level configurations modified.</p>
 <span class="c1"># dependencies = [&quot;rich-click&gt;=1.9.0dev1&quot;]</span>
 <span class="c1"># ///</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">rich_click</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">click</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rich_click</span><span class="w"> </span><span class="kn">import</span> <span class="n">RichContext</span><span class="p">,</span> <span class="n">RichHelpFormatter</span>
 
-<span class="nd">@click</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">SpecialGrp</span><span class="p">(</span><span class="n">click</span><span class="o">.</span><span class="n">RichGroup</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">format_help</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">RichContext</span><span class="p">,</span> <span class="n">formatter</span><span class="p">:</span> <span class="n">RichHelpFormatter</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">format_options</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">formatter</span><span class="p">)</span>
+
+<span class="nd">@click</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="n">SpecialGrp</span><span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--env&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Environment&quot;</span><span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">&quot;--log-level&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Log level&quot;</span><span class="p">)</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">option_panel</span><span class="p">(</span><span class="s2">&quot;Additional Options&quot;</span><span class="p">,</span>
-                    <span class="n">panel_styles</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;border_style&quot;</span><span class="p">:</span> <span class="s2">&quot;dim blue&quot;</span><span class="p">})</span>
-<span class="nd">@click</span><span class="o">.</span><span class="n">command_panel</span><span class="p">(</span><span class="s2">&quot;Subcommands&quot;</span><span class="p">,</span>
-                     <span class="n">panel_styles</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;border_style&quot;</span><span class="p">:</span> <span class="s2">&quot;dim magenta&quot;</span><span class="p">})</span>
+<span class="c1"># @click.option_panel(&quot;Additional Options&quot;,</span>
+<span class="c1">#                     panel_styles={&quot;border_style&quot;: &quot;dim blue&quot;})</span>
+<span class="c1"># @click.command_panel(&quot;Subcommands&quot;,</span>
+<span class="c1">#                      panel_styles={&quot;border_style&quot;: &quot;dim magenta&quot;})</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">rich_config</span><span class="p">({</span>
-    <span class="s2">&quot;arguments_panel_title&quot;</span><span class="p">:</span> <span class="s2">&quot;Required Args&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;options_panel_title&quot;</span><span class="p">:</span> <span class="s2">&quot;Additional Options&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;commands_panel_title&quot;</span><span class="p">:</span> <span class="s2">&quot;Subcommands&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;show_arguments&quot;</span><span class="p">:</span> <span class="kc">True</span>
+    <span class="c1"># &quot;arguments_panel_title&quot;: &quot;Required Args&quot;,</span>
+    <span class="c1"># &quot;options_panel_title&quot;: &quot;Additional Options&quot;,</span>
+    <span class="c1"># &quot;commands_panel_title&quot;: &quot;Subcommands&quot;,</span>
+    <span class="c1"># &quot;show_arguments&quot;: True</span>
 <span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">cli</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">log_level</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;My CLI&quot;&quot;&quot;</span>

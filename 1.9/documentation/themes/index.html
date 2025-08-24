@@ -1065,15 +1065,15 @@ The name of a full theme has the following schema: <code>{color_palette}-{format
 </div>
 </div>
 <p>Themes will also be used when you wrap a base Click CLI in the <code>rich-click</code> CLI, e.g.:</p>
-<p><a class="glightbox" href="../images/code_snippets/flask_themed.svg" data-type="image" data-width="100em" data-height="auto" data-desc-position="bottom"><img alt="" class="screenshot" src="../images/code_snippets/flask_themed.svg" title="RICH_CLICK_THEME=star-modern rich-click flask --help" /></a></p>
+<p><a class="glightbox" href="../../images/code_snippets/themes/flask_themed.svg" data-type="image" data-width="100em" data-height="auto" data-desc-position="bottom"><img alt="" class="screenshot" src="../../images/code_snippets/themes/flask_themed.svg" title="RICH_CLICK_THEME=star-modern rich-click flask --help" /></a></p>
 <p>Alternatively, when using the <code>rich-click [cmd]</code> CLI, you can pass a theme via the <code>--theme</code>/<code>-t</code> option:</p>
-<p><a class="glightbox" href="../images/code_snippets/flask_themed_2.svg" data-type="image" data-width="100em" data-height="auto" data-desc-position="bottom"><img alt="" class="screenshot" src="../images/code_snippets/flask_themed_2.svg" title="rich-click -t star-slim flask --help" /></a></p>
+<p><a class="glightbox" href="../../images/code_snippets/themes/flask_themed_2.svg" data-type="image" data-width="100em" data-height="auto" data-desc-position="bottom"><img alt="" class="screenshot" src="../../images/code_snippets/themes/flask_themed_2.svg" title="rich-click -t star-slim flask --help" /></a></p>
 <p>The <code>RICH_CLICK_THEME</code> env var can also be a full JSON representation of a config.
 For example, let's say you prefer having commands above options. There is a config option for this, <code>commands_before_options</code>, and you can place that in the <code>RICH_CLICK_THEME</code> env var:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">RICH_CLICK_THEME</span><span class="o">=</span><span class="s1">&#39;{&quot;commands_before_options&quot;: true, &quot;theme&quot;: &quot;news-robo&quot;}&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">RICH_CLICK_THEME</span><span class="o">=</span><span class="s1">&#39;{&quot;commands_before_options&quot;: true, &quot;theme&quot;: &quot;red1-robo&quot;}&#39;</span>
 rich-click<span class="w"> </span>flask<span class="w"> </span>--help
 </code></pre></div>
-<p><a class="glightbox" href="../images/flask_themed_3.svg" data-type="image" data-width="100em" data-height="auto" data-desc-position="bottom"><img alt="" class="screenshot" src="../images/flask_themed_3.svg" title="rich-click flask --help" /></a></p>
+<p><a class="glightbox" href="../../images/code_snippets/themes/flask_themed_3.svg" data-type="image" data-width="100em" data-height="auto" data-desc-position="bottom"><img alt="" class="screenshot" src="../../images/code_snippets/themes/flask_themed_3.svg" title="rich-click flask --help" /></a></p>
 <h2 id="themes-as-a-developer">Themes as a developer<a class="headerlink" href="#themes-as-a-developer" title="Permanent link">&para;</a></h2>
 <p>You can set a theme for your CLI by setting it in the config:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1"><code>{}</code></label><label for="__tabbed_3_2"><code>RichHelpConfiguration()</code></label><label for="__tabbed_3_3">Global config</label></div>

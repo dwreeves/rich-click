@@ -1065,18 +1065,58 @@ The name of a full theme has the following schema: <code>{color_palette}-{format
 </div>
 </div>
 <p>Themes will also be used when you wrap a base Click CLI in the <code>rich-click</code> CLI, e.g.:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Command</label><label for="__tabbed_3_2">uv command</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">RICH_CLICK_THEME</span><span class="o">=</span>star-modern
+rich-click<span class="w"> </span>flask<span class="w"> </span>--help
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">RICH_CLICK_THEME</span><span class="o">=</span>star-modern
+uv<span class="w"> </span>run<span class="w"> </span>--with<span class="o">=</span>flask<span class="w"> </span>--with<span class="o">=</span>rich-click<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>rich-click<span class="w"> </span>flask<span class="w"> </span>--help
+</code></pre></div>
+</div>
+</div>
+</div>
 <p><a class="glightbox" href="../../images/code_snippets/themes/flask_themed.svg" data-type="image" data-width="100em" data-height="auto" data-desc-position="bottom"><img alt="" class="screenshot" src="../../images/code_snippets/themes/flask_themed.svg" title="RICH_CLICK_THEME=star-modern rich-click flask --help" /></a></p>
 <p>Alternatively, when using the <code>rich-click [cmd]</code> CLI, you can pass a theme via the <code>--theme</code>/<code>-t</code> option:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Command</label><label for="__tabbed_4_2">uv command</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>rich-click<span class="w"> </span>-t<span class="w"> </span>star-slim<span class="w"> </span>flask<span class="w"> </span>--help
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>--with<span class="o">=</span>flask<span class="w"> </span>--with<span class="o">=</span>rich-click<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>rich-click<span class="w"> </span>--theme<span class="o">=</span>star-slim<span class="w"> </span>flask<span class="w"> </span>--help
+</code></pre></div>
+</div>
+</div>
+</div>
 <p><a class="glightbox" href="../../images/code_snippets/themes/flask_themed_2.svg" data-type="image" data-width="100em" data-height="auto" data-desc-position="bottom"><img alt="" class="screenshot" src="../../images/code_snippets/themes/flask_themed_2.svg" title="rich-click -t star-slim flask --help" /></a></p>
 <p>The <code>RICH_CLICK_THEME</code> env var can also be a full JSON representation of a config.
 For example, let's say you prefer having commands above options. There is a config option for this, <code>commands_before_options</code>, and you can place that in the <code>RICH_CLICK_THEME</code> env var:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">RICH_CLICK_THEME</span><span class="o">=</span><span class="s1">&#39;{&quot;commands_before_options&quot;: true, &quot;theme&quot;: &quot;red1-robo&quot;}&#39;</span>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">Command</label><label for="__tabbed_5_2">uv command</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">RICH_CLICK_THEME</span><span class="o">=</span><span class="s1">&#39;{&quot;commands_before_options&quot;: true, &quot;theme&quot;: &quot;red1-nu&quot;}&#39;</span>
 rich-click<span class="w"> </span>flask<span class="w"> </span>--help
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">RICH_CLICK_THEME</span><span class="o">=</span><span class="s1">&#39;{&quot;commands_before_options&quot;: true, &quot;theme&quot;: &quot;red2-robo&quot;}&#39;</span>
+uv<span class="w"> </span>run<span class="w"> </span>--with<span class="o">=</span>flask<span class="w"> </span>--with<span class="o">=</span>rich-click<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>rich-click<span class="w"> </span>flask<span class="w"> </span>--help
+</code></pre></div>
+</div>
+</div>
+</div>
 <p><a class="glightbox" href="../../images/code_snippets/themes/flask_themed_3.svg" data-type="image" data-width="100em" data-height="auto" data-desc-position="bottom"><img alt="" class="screenshot" src="../../images/code_snippets/themes/flask_themed_3.svg" title="rich-click flask --help" /></a></p>
 <h2 id="themes-as-a-developer">Themes as a developer<a class="headerlink" href="#themes-as-a-developer" title="Permanent link">&para;</a></h2>
 <p>You can set a theme for your CLI by setting it in the config:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1"><code>{}</code></label><label for="__tabbed_3_2"><code>RichHelpConfiguration()</code></label><label for="__tabbed_3_3">Global config</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:3"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><input id="__tabbed_6_3" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1"><code>{}</code></label><label for="__tabbed_6_2"><code>RichHelpConfiguration()</code></label><label for="__tabbed_6_3">Global config</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">rich_click</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">click</span>
@@ -1111,7 +1151,7 @@ rich-click<span class="w"> </span>flask<span class="w"> </span>--help
 <p>By default, a theme can still be overridden by a user.
 For CLIs which are already highly customized, this may cause unintended stylistic consequences.
 You can disable overrides with the <code>enable_theme_env_var</code> option:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:3"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1"><code>{}</code></label><label for="__tabbed_4_2"><code>RichHelpConfiguration()</code></label><label for="__tabbed_4_3">Global config</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:3"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><input id="__tabbed_7_3" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1"><code>{}</code></label><label for="__tabbed_7_2"><code>RichHelpConfiguration()</code></label><label for="__tabbed_7_3">Global config</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">rich_click</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">click</span>
@@ -1150,7 +1190,7 @@ For more information on config resolution order, read <a href="../configuration/
 <h2 id="all-themes">All themes<a class="headerlink" href="#all-themes" title="Permanent link">&para;</a></h2>
 <h3 id="formats">Formats<a class="headerlink" href="#formats" title="Permanent link">&para;</a></h3>
 <p>There are currently 5 available <strong>formats</strong>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="5:5"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><input id="__tabbed_5_3" name="__tabbed_5" type="radio" /><input id="__tabbed_5_4" name="__tabbed_5" type="radio" /><input id="__tabbed_5_5" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1"><code>box</code></label><label for="__tabbed_5_2"><code>slim</code></label><label for="__tabbed_5_3"><code>modern</code></label><label for="__tabbed_5_4"><code>robo</code></label><label for="__tabbed_5_5"><code>nu</code></label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:5"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><input id="__tabbed_8_3" name="__tabbed_8" type="radio" /><input id="__tabbed_8_4" name="__tabbed_8" type="radio" /><input id="__tabbed_8_5" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1"><code>box</code></label><label for="__tabbed_8_2"><code>slim</code></label><label for="__tabbed_8_3"><code>modern</code></label><label for="__tabbed_8_4"><code>robo</code></label><label for="__tabbed_8_5"><code>nu</code></label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p><strong>(Default)</strong> Original rich-click format with boxes.</p>
@@ -1202,7 +1242,7 @@ extra_env:
 <h3 id="color-palettes">Color palettes<a class="headerlink" href="#color-palettes" title="Permanent link">&para;</a></h3>
 <p>There are currently over a dozen different <strong>color palettes</strong>.</p>
 <h4 id="multi-colored-palettes">Multi-colored palettes<a class="headerlink" href="#multi-colored-palettes" title="Permanent link">&para;</a></h4>
-<div class="tabbed-set tabbed-alternate" data-tabs="6:9"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><input id="__tabbed_6_3" name="__tabbed_6" type="radio" /><input id="__tabbed_6_4" name="__tabbed_6" type="radio" /><input id="__tabbed_6_5" name="__tabbed_6" type="radio" /><input id="__tabbed_6_6" name="__tabbed_6" type="radio" /><input id="__tabbed_6_7" name="__tabbed_6" type="radio" /><input id="__tabbed_6_8" name="__tabbed_6" type="radio" /><input id="__tabbed_6_9" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1"><code>default</code></label><label for="__tabbed_6_2"><code>solarized</code></label><label for="__tabbed_6_3"><code>nord</code></label><label for="__tabbed_6_4"><code>star</code></label><label for="__tabbed_6_5"><code>quartz</code></label><label for="__tabbed_6_6"><code>quartz2</code></label><label for="__tabbed_6_7"><code>cargo</code></label><label for="__tabbed_6_8"><code>forest</code></label><label for="__tabbed_6_9"><code>dracula</code></label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="9:9"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><input id="__tabbed_9_3" name="__tabbed_9" type="radio" /><input id="__tabbed_9_4" name="__tabbed_9" type="radio" /><input id="__tabbed_9_5" name="__tabbed_9" type="radio" /><input id="__tabbed_9_6" name="__tabbed_9" type="radio" /><input id="__tabbed_9_7" name="__tabbed_9" type="radio" /><input id="__tabbed_9_8" name="__tabbed_9" type="radio" /><input id="__tabbed_9_9" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="__tabbed_9_1"><code>default</code></label><label for="__tabbed_9_2"><code>solarized</code></label><label for="__tabbed_9_3"><code>nord</code></label><label for="__tabbed_9_4"><code>star</code></label><label for="__tabbed_9_5"><code>quartz</code></label><label for="__tabbed_9_6"><code>quartz2</code></label><label for="__tabbed_9_7"><code>cargo</code></label><label for="__tabbed_9_8"><code>forest</code></label><label for="__tabbed_9_9"><code>dracula</code></label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p><strong>Default</strong> Original rich-click colors.</p>
@@ -1312,7 +1352,7 @@ extra_env:
 <h4 id="simple-palettes">Simple palettes<a class="headerlink" href="#simple-palettes" title="Permanent link">&para;</a></h4>
 <p>The following palettes all focus on just a single color.</p>
 <p>The below palettes are presented with the <code>modern</code> format.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="7:12"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><input id="__tabbed_7_3" name="__tabbed_7" type="radio" /><input id="__tabbed_7_4" name="__tabbed_7" type="radio" /><input id="__tabbed_7_5" name="__tabbed_7" type="radio" /><input id="__tabbed_7_6" name="__tabbed_7" type="radio" /><input id="__tabbed_7_7" name="__tabbed_7" type="radio" /><input id="__tabbed_7_8" name="__tabbed_7" type="radio" /><input id="__tabbed_7_9" name="__tabbed_7" type="radio" /><input id="__tabbed_7_10" name="__tabbed_7" type="radio" /><input id="__tabbed_7_11" name="__tabbed_7" type="radio" /><input id="__tabbed_7_12" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1"><code>red1</code></label><label for="__tabbed_7_2"><code>red2</code></label><label for="__tabbed_7_3"><code>green1</code></label><label for="__tabbed_7_4"><code>green2</code></label><label for="__tabbed_7_5"><code>yellow1</code></label><label for="__tabbed_7_6"><code>yellow2</code></label><label for="__tabbed_7_7"><code>blue1</code></label><label for="__tabbed_7_8"><code>blue2</code></label><label for="__tabbed_7_9"><code>magenta1</code></label><label for="__tabbed_7_10"><code>magenta2</code></label><label for="__tabbed_7_11"><code>cyan1</code></label><label for="__tabbed_7_12"><code>cyan2</code></label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="10:12"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><input id="__tabbed_10_3" name="__tabbed_10" type="radio" /><input id="__tabbed_10_4" name="__tabbed_10" type="radio" /><input id="__tabbed_10_5" name="__tabbed_10" type="radio" /><input id="__tabbed_10_6" name="__tabbed_10" type="radio" /><input id="__tabbed_10_7" name="__tabbed_10" type="radio" /><input id="__tabbed_10_8" name="__tabbed_10" type="radio" /><input id="__tabbed_10_9" name="__tabbed_10" type="radio" /><input id="__tabbed_10_10" name="__tabbed_10" type="radio" /><input id="__tabbed_10_11" name="__tabbed_10" type="radio" /><input id="__tabbed_10_12" name="__tabbed_10" type="radio" /><div class="tabbed-labels"><label for="__tabbed_10_1"><code>red1</code></label><label for="__tabbed_10_2"><code>red2</code></label><label for="__tabbed_10_3"><code>green1</code></label><label for="__tabbed_10_4"><code>green2</code></label><label for="__tabbed_10_5"><code>yellow1</code></label><label for="__tabbed_10_6"><code>yellow2</code></label><label for="__tabbed_10_7"><code>blue1</code></label><label for="__tabbed_10_8"><code>blue2</code></label><label for="__tabbed_10_9"><code>magenta1</code></label><label for="__tabbed_10_10"><code>magenta2</code></label><label for="__tabbed_10_11"><code>cyan1</code></label><label for="__tabbed_10_12"><code>cyan2</code></label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Simple theme with red accents on section headers.</p>
@@ -1462,7 +1502,7 @@ extra_env:
 </div>
 <h4 id="monochromatic-palettes">Monochromatic palettes<a class="headerlink" href="#monochromatic-palettes" title="Permanent link">&para;</a></h4>
 <p>The following palettes have zero color.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1"><code>mono</code></label><label for="__tabbed_8_2"><code>plain</code></label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><div class="tabbed-labels"><label for="__tabbed_11_1"><code>mono</code></label><label for="__tabbed_11_2"><code>plain</code></label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Monochromatic theme with no colors.</p>

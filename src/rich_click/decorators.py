@@ -318,7 +318,11 @@ def help_option(*param_decls: str, **kwargs: Any) -> Callable[[FC], FC]:
         if value and not ctx.resilient_parsing:
             # Avoid click.echo() because it ignores console settings like force_terminal.
             # Also, do not print() if empty string; assume console was record=False.
-            if getattr(ctx, "help_to_stderr", False):
+            if isinstance(ctx, RichContext) and ctx.help_to_pager:
+                formatter = ctx.make_formatter()
+                with formatter.console.pager(styles=True, links=True):
+                    ctx.command.format_help(ctx, formatter)
+            elif getattr(ctx, "help_to_stderr", False):
                 print(ctx.get_help(), file=sys.stderr)
             else:
                 print(ctx.get_help())

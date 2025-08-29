@@ -381,6 +381,7 @@ def list_themes(ctx: RichContext, param: click.Parameter, value: bool) -> None:
     type=click.Choice(["html", "svg", "text"], case_sensitive=False),
     help="Optionally render help text as HTML or SVG or plain text. By default, help text is rendered normally.",
 )
+@_rich_option("--pager", "-P", is_flag=True, default=False, help="If set, use terminal pager to render CLI.")
 @_rich_option(
     "--errors-in-output-format",
     is_flag=True,
@@ -433,6 +434,7 @@ def main(
     script_and_args: Tuple[str, ...],
     theme: str,
     output: Literal[None, "html", "svg"],
+    pager: bool,
     errors_in_output_format: bool,
     suppress_warnings: bool,
     patch_rich_click: bool,
@@ -512,4 +514,5 @@ https://ewels.github.io/rich-click/latest/documentation/rich_click_cli/[/]
     else:
         RichContext.export_console_as = ctx.export_console_as = output
         RichContext.errors_in_output_format = errors_in_output_format
+        RichContext.help_to_pager = pager
         function()

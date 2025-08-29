@@ -23,6 +23,7 @@ class RichContext(click.Context):
     export_console_as: Optional[Literal["html", "svg", "text"]] = None
     errors_in_output_format: bool = False
     help_to_stderr: bool = False
+    help_to_pager: bool = False
 
     def __init__(
         self,
@@ -32,6 +33,7 @@ class RichContext(click.Context):
         export_console_as: Optional[Literal["html", "svg", "text"]] = None,
         errors_in_output_format: Optional[bool] = None,
         help_to_stderr: Optional[bool] = None,
+        help_to_pager: Optional[bool] = None,
         **kwargs: Any,
     ) -> None:
         """
@@ -45,6 +47,7 @@ class RichContext(click.Context):
             export_console_as: Arg is passed to RichHelpFormatter().
             errors_in_output_format: Arg is passed to RichHelpFormatter().
             help_to_stderr: If set, help is printed to stderr.
+            help_to_pager: If set, help is printed to pager.
             **kwargs: Kwargs that get passed to click.Context.
 
         """
@@ -55,6 +58,11 @@ class RichContext(click.Context):
             self.help_to_stderr = parent.help_to_stderr  # type: ignore[union-attr]
         else:
             self.help_to_stderr = help_to_stderr or self.help_to_stderr
+
+        if help_to_pager is None and hasattr(parent, "help_to_pager"):
+            self.help_to_pager = parent.help_to_pager  # type: ignore[union-attr]
+        else:
+            self.help_to_pager = help_to_pager or self.help_to_pager
 
         if export_console_as is None and hasattr(parent, "export_console_as"):
             self.export_console_as = parent.export_console_as  # type: ignore[union-attr]

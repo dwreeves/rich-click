@@ -1,8 +1,8 @@
 # Contributing
 
 Contributions and suggestions for new features are welcome, as are bug reports!
-Please create a new [issue](https://github.com/ewels/rich-click/issues)
-or better still, dive right in with a pull-request.
+Please create a new [issue](https://github.com/ewels/rich-click/issues) first.
+You can dive right in with a pull request!
 
 ## Local setup
 
@@ -11,7 +11,7 @@ Requirements:
 - `uv` https://docs.astral.sh/uv/getting-started/installation/
 
 ```shell
-uv python pin 3.13
+uv python pin 3.14
 uv venv .venv
 source .venv/bin/activate
 uv sync --extra dev
@@ -37,6 +37,14 @@ In rare cases it may be difficult or undesirable to change to code to pass the l
 If this happens, it's ok to add a flake8 `# noqa` or mypy `# type: ignore` comment to skip that line.
 For details of how to do this, please see the [flake8 docs](https://flake8.pycqa.org/en/3.1.1/user/ignoring-errors.html#in-line-ignoring-errors)
 and [mypy docs](https://mypy.readthedocs.io/en/stable/common_issues.html#spurious-errors-and-locally-silencing-the-checker).
+
+## Use of AI
+
+We welcome contributions that use AI assistance.
+All we ask is:
+
+- Please disclose the use of AI in your code.
+- Please communicate with us using your own words if you are able to.
 
 ## Credits
 

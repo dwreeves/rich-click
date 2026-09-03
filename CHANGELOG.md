@@ -11,6 +11,10 @@ Development tooling only; no changes to the library itself.
 - Upgraded Material for MkDocs from 9.5 to 9.7, the final feature release, which folds in the former Insiders features.
 - Fixed some broken docs links, and enabled `strict` mode so that broken links and anchors fail the docs build.
 
+## Version 1.9.9 (2026-09-05)
+
+- Added support for Click 8.5 (resolved `DeprecationWarning`s) [[#350](https://github.com/ewels/rich-click/pull/350)] ([@happykust](https://github.com/happykust))
+
 ## Version 1.9.8 (2026-05-28)
 
 - Fixed regression in patching with Click 8.4.0.

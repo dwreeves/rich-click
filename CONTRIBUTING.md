@@ -1,8 +1,7 @@
 # Contributing
 
 Contributions and suggestions for new features are welcome, as are bug reports!
-Please create a new [issue](https://github.com/ewels/rich-click/issues) first.
-You can dive right in with a pull request!
+Please open an [issue](https://github.com/ewels/rich-click/issues) to discuss new features or to report bugs.
 
 ## Local setup
 
@@ -57,10 +56,17 @@ and [mypy docs](https://mypy.readthedocs.io/en/stable/common_issues.html#spuriou
 ## Use of AI
 
 We welcome contributions that use AI assistance.
+The maintainers of this code use AI coding assistance to varying degrees. Additionally, we have accepted and will continue to accept contributions from outside contributors which are AI written.
+
 All we ask is:
 
-- Please disclose the use of AI in your code.
-- Please communicate with us using your own words if you are able to.
+- Please disclose the use of AI coding in your pull request.
+- Please communicate with us using your own words, not through an AI.
+- Permission to use AI in contributions is not the same as permission to spam us with slop PRs.
+
+Please also consider the following: The maintainers of this code base have access to the same LLMs that you do.
+We have just as much of an ability as you do to copy+paste a simple issue description into an AI coding agent and get a pull request out of it.
+If you are scraping Github repos to find open issues and slinging slop at hundreds or thousands of projects you have no connection to, we are not interested.
 
 ## Credits
 

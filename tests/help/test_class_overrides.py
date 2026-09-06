@@ -4,6 +4,7 @@ from click.testing import CliRunner
 from inline_snapshot import snapshot
 
 import rich_click
+from rich_click._compat_click import CLICK_IS_BEFORE_VERSION_85
 from tests.conftest import load_command_from_module
 
 
@@ -16,8 +17,7 @@ def cli() -> rich_click.RichCommand:
 def test_class_overrides_command_panel(cli_runner: CliRunner, cli: rich_click.RichCommand) -> None:
     result = cli_runner.invoke(cli, "--help")
     assert result.exit_code == 0
-    assert result.stdout == snapshot(
-        """\
+    assert result.stdout == snapshot("""\
                                                                                                     \n\
  Usage: cli [OPTIONS] COMMAND [ARGS]...                                                             \n\
                                                                                                     \n\
@@ -36,8 +36,7 @@ def test_class_overrides_command_panel(cli_runner: CliRunner, cli: rich_click.Ri
 │ cmd1   Test that command is assigned to Rich Click Panel 2 via the decorator argument.           │
 │ grp1   Test that group is assigned to Rich Click Panel 2 via the decorator argument.             │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-"""
-    )
+""")
     assert result.stderr == snapshot("")
 
 
@@ -52,8 +51,8 @@ def test_class_overrides_click_command(cli_runner: CliRunner, cli: rich_click.Ri
 
     result = cli_runner.invoke(cmd, "--help")
     assert result.exit_code == 0
-    assert result.stdout == snapshot(
-        """\
+    if CLICK_IS_BEFORE_VERSION_85:
+        assert result.stdout == snapshot("""\
 Usage: click-command [OPTIONS] RICH_CLICK_ARG
 
   Test that RichParameters can be used with base click Commands.
@@ -61,8 +60,21 @@ Usage: click-command [OPTIONS] RICH_CLICK_ARG
 Options:
   --rich-click-option TEXT
   --help                    Show this message and exit.
-"""
-    )
+""")
+    else:
+        # Click 8.5 gives arguments their own help section.
+        assert result.stdout == snapshot("""\
+Usage: click-command [OPTIONS] RICH_CLICK_ARG
+
+  Test that RichParameters can be used with base click Commands.
+
+Positional arguments:
+  RICH_CLICK_ARG  Arg help text here
+
+Options:
+  --rich-click-option TEXT
+  --help                    Show this message and exit.
+""")
     assert result.stderr == snapshot("")
 
 
@@ -75,8 +87,7 @@ def test_class_overrides_click_parameters(cli_runner: CliRunner, cli: rich_click
 
     result = cli_runner.invoke(cmd, "--help")
     assert result.exit_code == 0
-    assert result.stdout == snapshot(
-        """\
+    assert result.stdout == snapshot("""\
                                                                                                     \n\
  Usage: click-options [OPTIONS] CLICK_ARG                                                           \n\
                                                                                                     \n\
@@ -90,6 +101,5 @@ def test_class_overrides_click_parameters(cli_runner: CliRunner, cli: rich_click
 ╭─ Options ────────────────────────────────────────────────────────────────────────────────────────╮
 │ --help  Show this message and exit.                                                              │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────╯
-"""
-    )
+""")
     assert result.stderr == snapshot("")
